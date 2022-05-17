@@ -25,4 +25,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/contack', [App\Http\Controllers\HomeController::class, 'contack'])->name('contack');
 Route::get('add/category',[CategoryController::class,'addcategory'])->name('add/category');
 Route::post('uploads/category',[CategoryController::class,'uploadscategory']);
+Route::get('delete/category/{id}',[CategoryController::class,'deletecategory']);
+Route::get('edit/category/{id}',[CategoryController::class,'editcategory']);
+Route::post('update/category/{id}',[CategoryController::class,'updatecategory']);
+
 

@@ -46,6 +46,13 @@
                              <h4>Category list</h4>
                             </div>
                             <div class="card-body">
+                                @if (session('success'))
+                                <div class="alert alert-danger">
+                                    {{ session('success') }}
+
+                                </div>
+                                    
+                                @endif
                               <table class="table table-bordered">
                                 <thead>
                                     <th>Sl no</th>
@@ -54,21 +61,30 @@
                                   <th>status</th>
                        
                                   <th>Create a time</th>
+                                  <th>Action</th>
                                 </thead>
                                 <tbody>
-                                    @foreach ($all_category as $category )
+                                    @forelse ($all_category as $category )
                                         
                                     
                                     <tr>
                                        <td>{{ $all_category->firstitem()+$loop->index }}</td>
                                        <td>{{ $category->category_name }}</td>
-                                       <td>{{ App\User::find($category->user_id) }}</td>
+                                       <td>{{ $category->categorytouser->name }}</td>
                                        <td>{{ $category->status }}</td>
                                        <td>{{ $category->created_at }}</td>
-                                      
+                                      <td>
+                                          <a href="{{ url('edit\category') }}\{{ $category->id }} "type="button" class="btn btn-success btn-sm">Edit</a>
+                                          <a href="{{ url('delete/category')}}\{{ $category->id }}" type="button" class="btn btn-danger btn-sm">Delete</a>
+
+                                      </td>
                                         
                                     </tr>
-                                    @endforeach
+                                    @empty
+                                    <tr>
+                                        <td colspan="100" class="text text-danger">no more data</td>
+                                    </tr>
+                                    @endforelse
                                 
                                
                                   
