@@ -24,3 +24,5 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/contack', [App\Http\Controllers\HomeController::class, 'contack'])->name('contack');
 Route::get('add/category',[CategoryController::class,'addcategory'])->name('add/category');
+Route::post('uploads/category',[CategoryController::class,'uploadscategory']);
+
