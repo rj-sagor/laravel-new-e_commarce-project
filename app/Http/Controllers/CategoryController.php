@@ -13,7 +13,8 @@ class CategoryController extends Controller
     //
     public function addcategory(){
         $all_category=Category::latest()->simplePaginate(4);
-        return view('admin.category.index',compact('all_category'));
+        $delete_category=Category::onlyTrashed()->simplePaginate(3);
+        return view('admin.category.index',compact('all_category','delete_category'));
     }
     public function uploadscategory(CategoryForm $request){
         Category::insert([
@@ -42,6 +43,24 @@ class CategoryController extends Controller
 
         ]);
         return back()->with('succes','category updated successfully !');
+
+    }
+    public function restorecategory($id){
+        Category::withTrashed()->find($id)->restore();
+        return back();
+
+    }
+    public function forcedeletecategory($id){
+      Category::withTrashed()->find($id)->forceDelete();
+      return back();
+    }
+    public function  markdelete(Request $request){
+        
+
+       foreach($request->category_id as $car_id){
+        Category::find($car_id)->delete();
+       }
+       return back();
 
     }
 }

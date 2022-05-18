@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -28,5 +29,17 @@ Route::post('uploads/category',[CategoryController::class,'uploadscategory']);
 Route::get('delete/category/{id}',[CategoryController::class,'deletecategory']);
 Route::get('edit/category/{id}',[CategoryController::class,'editcategory']);
 Route::post('update/category/{id}',[CategoryController::class,'updatecategory']);
+Route::get('restore/category/{id}',[CategoryController::class,'restorecategory']);
+Route::get('force/delete/category/{id}',[CategoryController::class,'forcedeletecategory']);
+Route::post('mark/delete',[CategoryController::class,'markdelete']);
+
+
+// =================================profile controller========================
+Route::get('profile/index',[ProfileController::class, 'profile']);
+Route::post('edit/post/name',[ProfileController::class, 'editName']);
+Route::post('edit/password',[ProfileController::class, 'chnagepassword']);
+
+
+
 
 
