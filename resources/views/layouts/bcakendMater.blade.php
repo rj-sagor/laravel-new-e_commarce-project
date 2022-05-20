@@ -29,7 +29,7 @@
     <meta name="description" content="Premium Quality and Responsive UI for Dashboard.">
     <meta name="author" content="ThemePixels">
 
-    <title>Starlight Responsive Bootstrap 4 Admin Template</title>
+    <title>@yield('title'){{ config('app.name', 'inronman') }}</title>
 
     <!-- vendor css -->
     <link href="{{ asset('backend') }}/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -96,7 +96,7 @@
           <div class="dropdown">
             <a href="" class="nav-link nav-link-profile" data-toggle="dropdown">
               <span class="logged-name">{{ Auth::user()->name }}</span></span>
-              <img src="../img/img3.jpg" class="wd-32 rounded-circle" alt="">
+              <img src="{{ asset('uploads/profile') }}/{{ Auth::user()->profile_photo }}" class="wd-32 rounded-circle" alt="">
             </a>
             <div class="dropdown-menu dropdown-menu-header wd-200">
               <ul class="list-unstyled user-profile-nav">

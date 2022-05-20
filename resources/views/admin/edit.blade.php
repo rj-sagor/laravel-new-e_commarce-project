@@ -1,4 +1,6 @@
 @extends('layouts.bcakendMater')
+@section('title','Edit_Category | ')
+
 @section('category')
 active
     

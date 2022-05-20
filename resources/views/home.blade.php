@@ -1,5 +1,7 @@
 
 @extends('layouts.bcakendMater')
+@section('title','home | ')
+
 @section('home')
 active
 @endsection

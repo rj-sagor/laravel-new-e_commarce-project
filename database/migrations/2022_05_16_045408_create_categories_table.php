@@ -16,8 +16,9 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('category_name',50);
-            $table->integer('user_id');
+            $table->integer('user_id')->comment('Riletion to user');
             $table->integer('status')->default(0);
+            $table->string('category_photo')->default('default.png');
             $table->timestamps();
             $table->softDeletes();
         });

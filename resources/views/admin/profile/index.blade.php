@@ -1,6 +1,6 @@
 
 @extends('layouts.bcakendMater')
-
+@section('title','Edit_profile | ')
 @section('backend_app')
 <div class="sl-mainpanel">
     <nav class="breadcrumb sl-breadcrumb">
@@ -16,7 +16,7 @@
       </div><!-- sl-page-title -->
       <div class="container">
         <div class="row">
-            <div class="col-lg-4 m-auto">
+            <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header card-header-default"><h5>Name Edit</h5></div>
                     <div class="card-body">
@@ -48,7 +48,38 @@
                     </div>
                 </div>
             </div>
-            
+            <div class="col-lg-6 ">
+                <div class="card">
+                    <div class="card-header card-header-default"><h5>Profile photo edit</h5></div>
+                    <div class="card-body">
+                       @error(session('profile_photo'))
+                       <div class="alert alert-danger">
+                           {{ $message }}
+                       </div>
+                           
+                       @enderror
+                       
+                        @if (session('photo'))
+                        <div class="alert alert-success">
+                            {{ session('photo') }}
+                        </div>
+                            
+                        @endif
+                       
+                     <form action="{{ url('profile/photo/edit') }}" method="post" enctype="multipart/form-data">
+                         @csrf 
+    
+                        <div class="mb-3">
+                            <input type="file" name="profile_photo"  class="form-control" placeholder="Enter your photo">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-sm btn-success">change phpto</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
                       
     
                     
@@ -126,4 +157,7 @@
 
 
 
+
+
 @endsection
+

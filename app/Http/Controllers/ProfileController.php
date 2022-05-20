@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\User;
 use Carbon\Carbon;
+use App\Models\User;
+use Illuminate\Http\Request;
+
+use Laravel\Ui\Presets\React;
 use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Hash;
+use Intervention\Image\Facades\Image;
+use Symfony\Component\HttpFoundation\RateLimiter\RequestRateLimiterInterface;
 
 class ProfileController extends Controller
 {
@@ -55,6 +60,34 @@ class ProfileController extends Controller
             return back()->with('passwordErr','your old password does not match');
            
         }
+       
 
     }
+    public function Chnageprofilephoto(Request $request){
+        $request->validate([
+            'profile_photo'=>'required|image',
+        ]);
+        if($request->hasFile('profile_photo')){
+            if(Auth::user()->profile_photo != 'profil_photo.png'){
+                $old_file_location='public/uploads/profile/'.Auth::user()->profile_photo;
+                unlink(base_path($old_file_location));
+            }
+        $uploaded_photo=$request->file('profile_photo');  
+         $new_profile_photo=Auth::id().'.'. $uploaded_photo->getClientOriginalExtension();
+         $new_profile_photo_location='public/uploads/profile/'.$new_profile_photo;
+        Image::make( $uploaded_photo)->save(base_path($new_profile_photo_location));
+
+        User::find(Auth::id())->update([
+            'profile_photo'=>$new_profile_photo
+        ]);
+        return back()->with('photo','photo updated successfully');
+
+        }
+        else{
+            return back()->with('photo','you dont have any photo');
+
+        }
+            
+    }
+
 }

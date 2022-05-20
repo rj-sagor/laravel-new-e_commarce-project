@@ -25,7 +25,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/contack', [App\Http\Controllers\HomeController::class, 'contack'])->name('contack');
 Route::get('add/category',[CategoryController::class,'addcategory'])->name('add/category');
-Route::post('uploads/category',[CategoryController::class,'uploadscategory']);
+Route::post('category/uploads',[CategoryController::class,'Categoryuploads']);
 Route::get('delete/category/{id}',[CategoryController::class,'deletecategory']);
 Route::get('edit/category/{id}',[CategoryController::class,'editcategory']);
 Route::post('update/category/{id}',[CategoryController::class,'updatecategory']);
@@ -38,6 +38,8 @@ Route::post('mark/delete',[CategoryController::class,'markdelete']);
 Route::get('profile/index',[ProfileController::class, 'profile']);
 Route::post('edit/post/name',[ProfileController::class, 'editName']);
 Route::post('edit/password',[ProfileController::class, 'chnagepassword']);
+Route::post('profile/photo/edit',[ProfileController::class, 'Chnageprofilephoto']);
+
 
 
 

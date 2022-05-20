@@ -1,4 +1,6 @@
 @extends('layouts.bcakendMater')
+@section('title','Add_category | ')
+
 
 @section('category')
 active
@@ -19,7 +21,7 @@ active
     </div><!-- sl-page-title -->
     <div class="container">
       <div class="row">
-          <div class="col-lg-4 m-left">
+          <div class="col-lg-3 m-left">
               <div class="card">
                   <div class="card-header bg-success"><h5>category Upload</h5></div>
                   <div class="card-body">
@@ -33,12 +35,15 @@ active
   
                     
                  
-                   <form action="{{ url('uploads/category') }}" method="post">
+                   <form action="{{ url('category/uploads') }}" method="post" enctype="multipart/form-data">
                        @csrf 
   
                       <div class="mb-3">
                           <input type="text" name="category_name"  class="form-control" placeholder="Enter your category">
                       </div>
+                      <div class="mb-3">
+                        <input type="file" name="category_photo"  class="form-control" placeholder="photo">
+                    </div>
                       @error('category_name')
                           <small class="text-danger">{{ $message }}</small>
                       @enderror
@@ -46,14 +51,15 @@ active
                       <div class="mb-3">
                           <button type="submit" class="btn btn-sm btn-success">submit</button>
                       </div>
-                      </form>
+                      </form> 
+                      
                   </div>
               </div>
           </div>
           
                     
   
-                      <div class="col-lg-8">
+                      <div class="col-lg-9">
                           <div class="container">
                           <div class="card mt-4">
                               <div class="card-header bg-success text-center">
@@ -71,13 +77,13 @@ active
                                 @csrf
   
                               <div class="card-body">
-                                <table class="table table-bordered">
+                                <table class="table table-bordered ">
                                   <thead>
                                     <th>mark</th>
                                       <th>Sl no</th>
                                     <th>Category_name</th>
                                     <th>category created at</th>
-                                    <th>status</th>
+                                    <th>image</th>
                          
                                     <th>Create a time</th>
                                     <th>Action</th>
@@ -91,7 +97,9 @@ active
                                          <td>{{ $all_category->firstitem()+$loop->index }}</td>
                                          <td>{{ $category->category_name }}</td>
                                          <td>{{ $category->categorytouser->name }}</td>
-                                         <td>{{ $category->status }}</td>
+                                         <td>
+                                          <img src="{{ asset('uploads/category') }}/{{ $category->category_photo }}" class="img-fluid" alt="no found">
+                                         </td>
                                          <td>{{ $category->created_at }}</td>
                                         <td>
                                             <a href="{{ url('edit\category') }}\{{ $category->id }} "type="button" class="btn btn-success btn-sm">Edit</a>
@@ -111,7 +119,11 @@ active
                                 </table>
                             
                                 {{ $all_category->links() }}
+                                @if ($all_category->count()>0)
                                <button class="btn btn-sm btn-danger">submit</button>
+
+                                  
+                                @endif
                               </div>
                             </form>
                              
@@ -124,7 +136,7 @@ active
   
                   </div>
   
-                  <div class="col-lg-9 m-auto">
+                  <div class="col-lg-12 m-auto">
                       <div class="container">
                       <div class="card mt-4 m-right">
                           <div class="card-header bg-danger text-center">
