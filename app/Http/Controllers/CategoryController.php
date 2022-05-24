@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\CategoryForm;
+use App\Models\Product;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
@@ -46,6 +47,7 @@ class CategoryController extends Controller
     }
     public function deletecategory($id){
         Category::find($id)->delete();
+        Product::where('category_id', $id)->delete();
         return back()->with('success',"category deleted successfully !");
 
     }

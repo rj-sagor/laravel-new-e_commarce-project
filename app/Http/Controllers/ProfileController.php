@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\HttpFoundation\RateLimiter\RequestRateLimiterInterface;
+use App\Mail\ChangePassMail;
+
+use Illuminate\Support\Facades\Mail;
 
 class ProfileController extends Controller
 {
@@ -39,7 +42,7 @@ class ProfileController extends Controller
 
     }
 
-    public function chnagepassword(Request $request){
+    public function chnagepassword(Request $request){ 
         $request->validate([
             'password'=>'confirmed|min:8'
         ]);
@@ -50,8 +53,11 @@ class ProfileController extends Controller
             }
             else{
                 User::find(Auth::id())->update([
-                    'password'=>$request->password,
+                    'password'=> Hash::make($request->password),
                 ]);
+                $email=Auth::user()->email;
+                Mail::to($email)->send(new ChangePassMail(Auth::user()->name));
+                
             return back()->with('password','your password updated successfully!');
 
             }

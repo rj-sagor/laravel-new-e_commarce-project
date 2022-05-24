@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Mail\MailSendUser;
+use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
@@ -28,8 +30,21 @@ class HomeController extends Controller
         $total_user=User::count();
         return view('/home',compact('users','total_user'));
     }
-    public function contack()
-    {
-        return view('contack');
-    }
+    // public function contack()
+    // {
+    //     return view('contack');
+    // }
+    public function SendMailuser(){
+
+        foreach(User::all()->pluck('email') as $email){
+          
+            Mail::to($email)->send( new MailSendUser());
+          
+          }
+          return back();
+        
+            
+        }
+     
+
 }

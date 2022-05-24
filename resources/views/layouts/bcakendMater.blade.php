@@ -35,6 +35,10 @@
     <link href="{{ asset('backend') }}/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="{{ asset('backend') }}/lib/Ionicons/css/ionicons.css" rel="stylesheet">
     <link href="{{ asset('backend') }}/lib/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
+    <link href="{{ asset('backend') }}/lib/medium-editor/medium-editor.css" rel="stylesheet">
+    <link href="{{ asset('backend') }}/lib/medium-editor/default.css" rel="stylesheet">
+    <link href="{{ asset('backend') }}/lib/summernote/summernote-bs4.css" rel="stylesheet">
+
 
 
     <!-- Starlight CSS -->
@@ -61,6 +65,21 @@
             <span class="menu-item-label">Home</span>
           </div><!-- menu-item -->
         </a><!-- sl-menu-link -->
+
+        <a href="#" class="sl-menu-link  @yield('banner')">
+          <div class="sl-menu-item">
+            <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
+            <span class="menu-item-label">banner</span>
+            <i class="menu-item-arrow fa fa-angle-down"></i>
+          </div><!-- menu-item -->
+        </a><!-- sl-menu-link -->
+        <ul class="sl-menu-sub nav flex-column">
+          <li class="nav-item"><a href="{{route('banner.create')}}" class="nav-link  @yield('add.banner')">add banner</a></li>
+          <li class="nav-item"><a href="{{ route('product.index') }}" class="nav-link  @yield('manage.product')">Manage banner</a></li>
+          {{-- <li class="nav-item"><a href="{{ route('product.delete') }}" class="nav-link  @yield('restore.product')">Restore products</a></li></ul> --}}
+
+        </ul>
+
         <a href="{{ route('add/category') }}" class="sl-menu-link @yield('category')">
           <div class="sl-menu-item">
             <i class="menu-item-icon icon ion-ios-photos-outline tx-20"></i>
@@ -68,6 +87,29 @@
           </div><!-- menu-item -->
         </a><!-- sl-menu-link -->
         <a href="#" class="sl-menu-link">
+
+          <a href="#" class="sl-menu-link  @yield('product')">
+            <div class="sl-menu-item">
+              <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
+              <span class="menu-item-label">Products</span>
+              <i class="menu-item-arrow fa fa-angle-down"></i>
+            </div><!-- menu-item -->
+          </a><!-- sl-menu-link -->
+          <ul class="sl-menu-sub nav flex-column">
+            <li class="nav-item"><a href="{{route('product.create')}}" class="nav-link  @yield('add.product')">add products</a></li>
+            <li class="nav-item"><a href="{{ route('product.index') }}" class="nav-link  @yield('manage.product')">Manage products</a></li>
+            <li class="nav-item"><a href="{{ route('product.delete') }}" class="nav-link  @yield('restore.product')">Restore products</a></li></ul>
+
+          </ul>
+
+          <a href="{{ route('user.info.view') }}" class="sl-menu-link @yield('user_info')">
+            <div class="sl-menu-item">
+              <i class="menu-item-icon icon ion-ios-photos-outline tx-20"></i>
+              <span class="menu-item-label">User Information</span>
+            </div><!-- menu-item -->
+          </a><!-- sl-menu-link -->
+  
+          <a href="#" class="sl-menu-link">
           <div class="sl-menu-item">
             <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
             <span class="menu-item-label">Charts</span>
@@ -78,7 +120,7 @@
           <li class="nav-item"><a href="chart-morris.html" class="nav-link">Morris Charts</a></li>
           <li class="nav-item"><a href="chart-flot.html" class="nav-link">Flot Charts</a></li>
         
-      
+        </ul>>
       </div><!-- sl-sideleft-menu -->
 
       <br>
@@ -188,7 +230,28 @@
     <script src="{{ asset('backend') }}/lib/popper.js/popper.js"></script>
     <script src="{{ asset('backend') }}/lib/bootstrap/bootstrap.js"></script>
     <script src="{{ asset('backend') }}/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+    <script src="{{ asset('backend') }}/lib/medium-editor/medium-editor.js"></script>
+    <script src="{{ asset('backend') }}/lib/summernote/summernote-bs4.min.js"></script>
+       
+    <script>
+      $(function(){
+        'use strict';
 
+        // Inline editor
+        var editor = new MediumEditor('.editable');
+
+        // Summernote editor
+        $('#summernote').summernote({
+          height: 150,
+          tooltip: false
+        })
+        $('#summernote2').summernote({
+          height: 150,
+          tooltip: false
+        })
+      });
+    </script>
+   
     <script src="{{ asset('backend') }}/js/starlight.js"></script>
 
   </body>

@@ -23,7 +23,12 @@ active
         <div class="col-md-8">
           <div class="card">
             <div class="card-header bg-dark text-white">admin details</div>
+            <div class="mt-4">
+              <a href="{{ url('send/Email/all_user') }}" class="btn btn-info ml-3">Send Email to {{ $total_user }} user</a>
+            </div>
+          
           <div class="card-body">
+            <span>Total User:{{ $total_user }}</span>
             <table class="table table-bordered">
               <thead>
                   <th>Sl no</th>
