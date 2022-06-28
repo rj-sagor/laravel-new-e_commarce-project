@@ -24,6 +24,7 @@ return new class extends Migration
             $table->longText('short_description');
             $table->longText('long_description');
              $table->string('image')->default('product_default_image.jpg');
+             $table->longText('slug');
 
             $table->timestamps();
             $table->softDeletes();

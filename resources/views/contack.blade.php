@@ -36,7 +36,7 @@
                     </div>     
                     @endif
                     <div class="cf-msg"></div>
-                    <form action="{{ route('send.user.information') }}" method="post" >
+                    <form action="{{ route('send.user.information') }}" method="post" enctype="multipart/form-data" >
                         @csrf
                         <div class="row">
                             <div class="col-12 col-sm-6">
@@ -63,6 +63,13 @@
                             <div class="col-12">
                                 <textarea class="contact-textarea" placeholder="Message" id="msg" name="meassage"></textarea>
                                 @error('meassage')
+                                <div class="text text-danger">{{ $message }}</div>
+                                    
+                                @enderror
+                            </div>
+                             <div class="col-12">
+                                <input type="file" class="form-control" name="user_file">
+                                @error('subject')
                                 <div class="text text-danger">{{ $message }}</div>
                                     
                                 @enderror

@@ -27,6 +27,9 @@
             <a href="{{ route('password.request') }}" class="tx-info tx-12 d-block mg-t-10">Forgot password?</a>
           </div><!-- form-group -->
           <button type="submit" class="btn btn-info btn-block">Sign In</button>
+          <br>
+          <a href="{{ url('login/github') }}" class="btn btn-dark text-light btn-block"><i class="fa fa-github"></i>Sign In Github</a>
+          <a href="" class="btn btn-danger btn-block"><i class="fa fa-google"></i>Sign In Google</a>
     
 
       </form>

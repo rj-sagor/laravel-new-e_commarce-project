@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
+use App\Models\UserInfo;
 use App\Mail\MailSendUser;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -17,6 +19,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('ceckrole');
     }
 
     /**
@@ -36,14 +39,22 @@ class HomeController extends Controller
     // }
     public function SendMailuser(){
 
-        foreach(User::all()->pluck('email') as $email){
+        // foreach(User::all()->pluck('email') as $email){
           
-            Mail::to($email)->send( new MailSendUser());
+        //     Mail::to($email)->send( new MailSendUser());
           
-          }
-          return back();
-        
+        //   }
+        //   return back();
+         $email= User::find(14)->email;
+       Mail::to($email)->send( new MailSendUser());
+       return back();
             
+        }
+        
+        public function UserInfoDownload($user_id){
+            // echo UserInfo::findOrFail($user_id);
+            return Storage::download( UserInfo::findOrFail($user_id)->user_file);
+
         }
      
 

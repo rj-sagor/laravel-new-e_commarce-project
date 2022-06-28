@@ -137,7 +137,7 @@
                         </div>
                         
                         <div class="mb-3">
-                            <button type="submit" class="btn btn-sm btn-warning">change Name</button>
+                            <button type="submit" class="btn btn-sm btn-warning">change password</button>
                         </div>
                         </form>
                     </div>

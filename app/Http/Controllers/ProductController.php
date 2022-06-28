@@ -6,12 +6,20 @@ use Carbon\Carbon;
 use Faker\Core\File;
 use App\Models\Product;
 use App\Models\Category;
-use GuzzleHttp\Handler\Proxy;
+use App\Models\MultiImage;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use GuzzleHttp\Handler\Proxy;
 use Intervention\Image\Facades\Image;
 
 class ProductController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('ceckrole');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -45,6 +53,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        
+
          $request->validate([
            
             'product_name'=>'required',
@@ -53,18 +63,34 @@ class ProductController extends Controller
             'category_id'=>'required',
         ]);
         
-       
-       $product_id= Product::insertGetId($request->except('_token','image') +[ 
+         $slug_link=Str::slug($request->product_name."-".Str::random(6));
+       $product_id= Product::insertGetId($request->except('_token','image','multipale_image') +[ 
+           'slug'=>$slug_link,
             'created_at'=>Carbon::now(),
         ]);
 
         if($request->hasFile('image')){
           
            $file_name=$product_id.'.'.$request->file('image')->getClientOriginalExtension();
-           Image::make($request->file('image'))->resize(100,100)->save(base_path('public/uploads/product/'.$file_name));
+           Image::make($request->file('image'))->resize(600,622)->save(base_path('public/uploads/product/'.$file_name));
            Product::find($product_id)->update([
                'image'=>$file_name,
            ]);
+
+           if($request->hasFile('multipale_image')){
+            $flag= 1;
+        foreach($request->file('multipale_image') as $single_image){
+            $file_name=$product_id."-".$flag.'.'.$single_image->getClientOriginalExtension();
+            Image::make($single_image)->resize(600,622)->save(base_path('public/uploads/multi_image/'.$file_name));
+             $flag++;
+             MultiImage::insert([
+                 'product_id'=>$product_id,
+                 'multipale_image'=>$file_name,
+                 'created_at'=>Carbon::now(),
+             ]);
+        }
+       
+       };
              
       return back();
        
@@ -109,7 +135,7 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
        
-       
+     
          $product->update($request->except('_token','_method','image'));
         if($request->hasFile('image')){
             if(Product::findOrFail($product->id)->image != 'product_default_image.jpg'){

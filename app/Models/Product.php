@@ -15,4 +15,8 @@ class Product extends Model
     public function ProductToCategory(){
       return $this->belongsTo(Category::class,'category_id','id');
     }
+    public function ProductToMultiImage(){
+      return $this->hasMany(MultiImage::class,'product_id','id');
+
+    }
 }

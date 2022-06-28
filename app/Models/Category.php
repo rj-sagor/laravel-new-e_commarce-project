@@ -19,4 +19,8 @@ class Category extends Model
         'category_photo',
         
     ];
+    public function CategoryriletionProduct(){
+        return $this->hasMany(Product::class,'category_id','id');
+        
+    }
 }

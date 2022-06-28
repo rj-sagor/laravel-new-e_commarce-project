@@ -29,6 +29,13 @@ active
           
           <div class="card-body">
             <span>Total User:{{ $total_user }}</span>
+            <span>
+              @if (Auth::user()->role == 1)
+                <h1> you are admin</h1>
+              @else
+              <h1> you are customer</h1>
+              @endif
+            </span>
             <table class="table table-bordered">
               <thead>
                   <th>Sl no</th>

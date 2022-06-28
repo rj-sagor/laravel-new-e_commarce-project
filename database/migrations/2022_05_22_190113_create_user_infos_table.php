@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('subject');
             $table->string('meassage');
+            $table->string('user_file')->nullable();
             $table->timestamps();
         });
     }

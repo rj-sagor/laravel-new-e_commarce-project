@@ -58,7 +58,8 @@
       </div><!-- input-group -->
 
       <label class="sidebar-label">Navigation</label>
-      <div class="sl-sideleft-menu">
+      @if (Auth::user()->role ==1)
+         <div class="sl-sideleft-menu">
         <a href="{{ url('home') }}" class="sl-menu-link @yield('home')">
           <div class="sl-menu-item">
             <i class="menu-item-icon icon ion-ios-home-outline tx-22"></i>
@@ -75,7 +76,7 @@
         </a><!-- sl-menu-link -->
         <ul class="sl-menu-sub nav flex-column">
           <li class="nav-item"><a href="{{route('banner.create')}}" class="nav-link  @yield('add.banner')">add banner</a></li>
-          <li class="nav-item"><a href="{{ route('product.index') }}" class="nav-link  @yield('manage.product')">Manage banner</a></li>
+          <li class="nav-item"><a href="{{ route('banner.index') }}" class="nav-link  @yield('manage.banner')">Manage banner</a></li>
           {{-- <li class="nav-item"><a href="{{ route('product.delete') }}" class="nav-link  @yield('restore.product')">Restore products</a></li></ul> --}}
 
         </ul>
@@ -108,20 +109,33 @@
               <span class="menu-item-label">User Information</span>
             </div><!-- menu-item -->
           </a><!-- sl-menu-link -->
+
+          <a href="#" class="sl-menu-link  @yield('coupon')">
+            <div class="sl-menu-item">
+              <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
+              <span class="menu-item-label">Coupon</span>
+              <i class="menu-item-arrow fa fa-angle-down"></i>
+            </div><!-- menu-item -->
+          </a><!-- sl-menu-link -->
+          <ul class="sl-menu-sub nav flex-column">
+            <li class="nav-item"><a href="{{route('coupon.create')}}" class="nav-link  @yield('add.coupon')">add coupon</a></li>
+            <li class="nav-item"><a href="{{ route('coupon.index') }}" class="nav-link  @yield('manage.coupon')">Manage coupon</a></li>
+            {{-- <li class="nav-item"><a href="{{ route('product.delete') }}" class="nav-link  @yield('restore.product')">Restore products</a></li></ul> --}}
+
+          </ul>
   
-          <a href="#" class="sl-menu-link">
-          <div class="sl-menu-item">
-            <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
-            <span class="menu-item-label">Charts</span>
-            <i class="menu-item-arrow fa fa-angle-down"></i>
-          </div><!-- menu-item -->
-        </a><!-- sl-menu-link -->
-        <ul class="sl-menu-sub nav flex-column">
-          <li class="nav-item"><a href="chart-morris.html" class="nav-link">Morris Charts</a></li>
-          <li class="nav-item"><a href="chart-flot.html" class="nav-link">Flot Charts</a></li>
         
-        </ul>>
       </div><!-- sl-sideleft-menu -->
+      @else
+      <a href="{{ route('user.info.view') }}" class="sl-menu-link @yield('user_info')">
+        <div class="sl-menu-item">
+          <i class="menu-item-icon icon ion-ios-photos-outline tx-20"></i>
+          <span class="menu-item-label">User Information</span>
+        </div><!-- menu-item -->
+      </a><!-- sl-menu-link -->
+        
+      @endif
+     
 
       <br>
     </div><!-- sl-sideleft -->

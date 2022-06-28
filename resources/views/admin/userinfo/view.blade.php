@@ -66,7 +66,10 @@
                      
                       <td style="color: black;">{{$data->created_at}}</td>
                       <td>
-                        <a href=" " class="btn btn-info btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                        @if ($data->user_file)
+                        <a href=" {{ url('user/info/download') }}/{{ $data->id }}" class="btn btn-info btn-sm"><i class="fa fa-download" aria-hidden="true"></i></a>
+                          
+                        @endif
                         
                       </td>
                     

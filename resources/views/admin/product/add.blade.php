@@ -123,6 +123,16 @@
                 </div>
               </div><!-- col-4 -->
 
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label">Other Image: <span class="tx-danger">*</span></label>
+                  <input class="form-control" type="file" name="multipale_image[]" multiple>
+                  @error('image_one')
+                     <strong class="text-danger">{{ $message}}</strong>
+                  @enderror
+                </div>
+              </div><!-- col-4 -->
+
             
              
             </div><!-- row -->

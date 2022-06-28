@@ -8,6 +8,7 @@
     <title>Tohoney - Home One</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" type="image/png" href="assets/images/favicon.png">
     <!-- Place favicon.ico in the root directory -->
     <!-- all css here -->
@@ -30,6 +31,7 @@
     <!-- responsive css -->
     <link rel="stylesheet" href="{{ asset('fronend') }}/assets/css/responsive.css">
     <!-- modernizr css -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="{{ asset('fronend') }}/assets/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 
@@ -81,7 +83,7 @@
                                     <li><a href="wishlist.html">wishlist</a></li>
                                 </ul>
                             </li>
-                            <li><a href="register.html"> Login/Register </a></li>
+                            <li><a href="{{ route('customer.login') }}"> Login/Register </a></li>
                             <li>
                                 <a href="javascript:void(0);"> USD <i class="fa fa-angle-down"></i></a>
                                 <ul class="dropdown_style right">
@@ -110,7 +112,7 @@
                         <nav class="mainmenu">
                             <ul class="d-flex">
                                 <li class="active">
-                                    <a href="javascript:void(0);">Home <i class="fa fa-angle-down"></i></a>
+                                    <a href="{{ url('/') }}">Home <i class="fa fa-angle-down"></i></a>
                                     <ul class="dropdown_style">
                                         <li><a href="index.html">Home Main</a></li>
                                         <li><a href="index2.html">Home Two</a></li>
@@ -119,15 +121,8 @@
                                 </li>
                                 <li><a href="about.html">About</a></li>
                                 <li>
-                                    <a href="javascript:void(0);">Shop <i class="fa fa-angle-down"></i></a>
-                                    <ul class="dropdown_style">
-                                        <li><a href="shop.html">Shop Page</a></li>
-                                        <li><a href="shop-sidebar.html">Shop Sidebar</a></li>
-                                        <li><a href="single-product.html">Product Details</a></li>
-                                        <li><a href="cart.html">Shopping cart</a></li>
-                                        <li><a href="checkout.html">Checkout</a></li>
-                                        <li><a href="wishlist.html">Wishlist</a></li>
-                                    </ul>
+                                    <a href="{{ url('shop') }}">Shop {{ total_valu_count() }}<i class="fa fa-angle-down"></i></a>
+                                   
                                 </li>
                                 <li>
                                     <a href="javascript:void(0);">Pages <i class="fa fa-angle-down"></i></a>
@@ -146,7 +141,7 @@
                                         <li><a href="blog-details.html">blog Details</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="contact.html">Contact</a></li>
+                                <li><a href="{{ url('contuck') }}">Contact</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -154,75 +149,66 @@
                         <ul class="search-cart-wrapper d-flex">
                             <li class="search-tigger"><a href="javascript:void(0);"><i class="flaticon-search"></i></a></li>
                             <li>
-                                <a href="javascript:void(0);"><i class="flaticon-like"></i> <span>2</span></a>
+                                <a href="javascript:void(0);"><i class="flaticon-like"></i> <span>{{ Wishlist_count() }}</span></a>
                                 <ul class="cart-wrap dropdown_style">
-                                    <li class="cart-items">
+                                      @php
+                                          $sub_total=0;
+                                      @endphp
+                                    @foreach ( Wishlist_item() as $Wish_item )
+                                        <li class="cart-items">
                                         <div class="cart-img">
-                                            <img src="{{ asset('fronend') }}/assets/images/cart/1.jpg" alt="">
+                                            <img width="50px" height="50px" src="{{ asset('uploads/product') }}/{{  $Wish_item->Wishlist_to_product->image }}" alt="" >
                                         </div>
                                         <div class="cart-content">
-                                            <a href="cart.html">Pure Nature Product</a>
-                                            <span>QTY : 1</span>
-                                            <p>$35.00</p>
-                                            <i class="fa fa-times"></i>
+                                            <a href="cart.html">{{ $Wish_item->Wishlist_to_product->product_name }}</a>
+                                            <span>QTY :{{ $Wish_item->product_quantity }}</span>
+                                            <p>${{ $Wish_item->Wishlist_to_product->price }}</p>
+                                            <a href="{{ route('wishlist.remove',$Wish_item->id) }}"><i class="fa fa-times"></i></a>
+                                            @php
+                                                $sub_total += $Wish_item->product_quantity * $Wish_item->Wishlist_to_product->price;
+                                            @endphp
                                         </div>
                                     </li>
-                                    <li class="cart-items">
-                                        <div class="cart-img">
-                                            <img src="{{ asset('fronend') }}/assets/images/cart/3.jpg" alt="">
-                                        </div>
-                                        <div class="cart-content">
-                                            <a href="cart.html">Pure Nature Product</a>
-                                            <span>QTY : 1</span>
-                                            <p>$35.00</p>
-                                            <i class="fa fa-times"></i>
-                                        </div>
-                                    </li>
-                                    <li>Subtotol: <span class="pull-right">$70.00</span></li>
+                                   
+                                    @endforeach
+                                    <
+                                    <li>Subtotol: <span class="pull-right">${{ $sub_total }}</span></li>
                                     <li>
-                                        <button>Check Out</button>
+                                        <a href="{{ route('wishlist.page.show') }}" class="btn btn-dark text-light btn-sm">Goto Cart page</a>
+                                    
+    
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="javascript:void(0);"><i class="flaticon-shop"></i> <span>3</span></a>
+                                <a href="javascript:void(0);"><i class="flaticon-shop"></i> <span>{{ Cart_count() }}</span></a>
                                 <ul class="cart-wrap dropdown_style">
-                                    <li class="cart-items">
+                                    @php
+                                        $sub_total=0
+                                    @endphp
+                                    @foreach (cart_item() as $item )
+                                         <li class="cart-items">
                                         <div class="cart-img">
-                                            <img src="{{asset('fronend')}}/assets/images/cart/1.jpg" alt="">
+                                            {{-- {{ $item->Cart_RiletionTo_Product }} --}}
+                                            <img width="50px" height="50px" src="{{ asset('uploads/product') }}/{{  $item->Cart_RiletionTo_Product->image }}" alt="" >
                                         </div>
                                         <div class="cart-content">
-                                            <a href="cart.html">Pure Nature Product</a>
-                                            <span>QTY : 1</span>
-                                            <p>$35.00</p>
-                                            <i class="fa fa-times"></i>
+                                            <a href="cart.html">{{ $item->Cart_RiletionTo_Product->product_name }}</a>
+                                            <span>QTY : {{ $item->product_quantity }}</span>
+                                            <p>{{ $item->product_quantity * $item->Cart_RiletionTo_Product->price}}</p>
+                                          
+                                            @php
+                                                $sub_total= $sub_total + ($item->product_quantity * $item->Cart_RiletionTo_Product->price)
+                                            @endphp
+                                            <a href="{{ route('remove.product.cart',$item->id) }}"><i class="fa fa-times"></i></a>
                                         </div>
                                     </li>
-                                    <li class="cart-items">
-                                        <div class="cart-img">
-                                            <img src="{{asset('fronend')}}/assets/images/cart/3.jpg" alt="">
-                                        </div>
-                                        <div class="cart-content">
-                                            <a href="cart.html">Pure Nature Product</a>
-                                            <span>QTY : 1</span>
-                                            <p>$35.00</p>
-                                            <i class="fa fa-times"></i>
-                                        </div>
-                                    </li>
-                                    <li class="cart-items">
-                                        <div class="cart-img">
-                                            <img src="{{asset('fronend')}}/assets/images/cart/2.jpg" alt="">
-                                        </div>
-                                        <div class="cart-content">
-                                            <a href="cart.html">Pure Nature Product</a>
-                                            <span>QTY : 1</span>
-                                            <p>$35.00</p>
-                                            <i class="fa fa-times"></i>
-                                        </div>
-                                    </li>
-                                    <li>Subtotol: <span class="pull-right">$70.00</span></li>
+                                    @endforeach
+                                   
+                                  
+                                    <li>Subtotol: <span class="pull-right"> ${{ $sub_total }}</span></li>
                                     <li>
-                                        <button>Check Out</button>
+                                        <a href="{{ route('cart.page.show') }} " class="btn btn-dark text-light btn-sm">Goto Cart page</a>
                                     </li>
                                 </ul>
                             </li>
@@ -262,7 +248,7 @@
                                         <li><a href="single-product.html">Product Details</a></li>
                                         <li><a href="cart.html">Shopping cart</a></li>
                                         <li><a href="checkout.html">Checkout</a></li>
-                                        <li><a href="wishlist.html">Wishlist</a></li>
+                                        <li><a href="{{ route('wishlist.page.show') }}">Wishlist</a></li>
                                     </ul>
                                 </li>
                                 <li class="sidemenu-items">
@@ -282,7 +268,7 @@
                                         <li><a href="blog-details.html">Blog Details</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="{{ route('contack.page') }}">Contact</a></li>
+                                <li><a href=""></a></li>
                             </ul>
                         </div>
                     </div>
@@ -302,8 +288,9 @@
                     <div class="newsletter text-center">
                         <h3>Subscribe  Newsletter</h3>
                         <div class="newsletter-form">
-                            <form>
-                                <input type="text" class="form-control" placeholder="Enter Your Email Address...">
+                            <form action="{{ url('subscription') }}" method="POST">
+                                @csrf
+                                <input type="text" class="form-control" name="email" placeholder="Enter Your Email Address...">
                                 <button type="submit"><i class="fa fa-send"></i></button>
                             </form>
                         </div>
@@ -323,11 +310,11 @@
                         <div class="col-lg-12 col-12">
                             <div class="footer-top-text text-center">
                                 <ul>
-                                    <li><a href="home.html">home</a></li>
+                                    <li><a href="{{ url('/') }}">home</a></li>
                                     <li><a href="#">our story</a></li>
                                     <li><a href="#">feed shop</a></li>
                                     <li><a href="blog.html">how to eat blog</a></li>
-                                    <li><a href="contact.html">contact</a></li>
+                                    <li><a href="{{ url('contuck') }}">contt</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -450,6 +437,9 @@
     <script src="{{ asset('fronend') }}/assets/js/jquery-ui.min.js"></script>
     <!-- main js -->
     <script src="{{ asset('fronend') }}/assets/js/scripts.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+ 
+    @yield('fotter_script')
 </body>
 
 </html>
