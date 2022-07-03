@@ -12,6 +12,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocailMediaController;
 use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\StripePaymentController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use League\CommonMark\Extension\FrontMatter\FrontMatterParser;
@@ -87,6 +88,7 @@ Route::get('wishlsit/remove/{id}',[WishlistController::class,'remove'])->name('w
 Route::get('customer/login',[CustomerController::class,'home'])->name('customer.login');
 Route::get('customer/home',[CustomerController::class,'customerHome'])->name('customer.home');
 Route::post('customer/detail/store',[CustomerController::class,'store'])->name('customer.store');
+Route::get('order/invoice/dowload/{id}',[CustomerController::class,'orderinvoicedowload'])->name('order.invoice.dowload');
 // =============================SocailMediaController===================
 Route::get('login/github', [SocailMediaController::class, 'redirectToProvider']);
 Route::get('login/github/callback', [SocailMediaController::class,'handleProviderCallback']);
@@ -94,6 +96,13 @@ Route::get('login/github/callback', [SocailMediaController::class,'handleProvide
 Route::get('checkout/page',[CheckoutController::class,'home'])->name('checkout.page');
 Route::post('checkout/store',[CheckoutController::class,'billings'])->name('checkout.store');
 Route::post('/district/list/ajax',[CheckoutController::class,'ajaxListdistrict']);
+// ================================paymentGetway==================
+Route::get('stripe', [StripePaymentController::class, 'stripe']);
+Route::post('stripe', [StripePaymentController::class, 'stripePost'])->name('stripe.post');
+
+
+
+
 
 
 

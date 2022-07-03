@@ -98,6 +98,7 @@ class CheckoutController extends Controller
             foreach(cart_item() as $item){
                 OrderDetails::insert([
                  'order_id'=>$order_id,
+                 'user_id'=>Auth::id(),
                  'product_id'=>$item->product_id,
                  'product_quantity'=>$item->product_quantity,
                  'price'=>$item->Cart_RiletionTo_Product->price,

@@ -38,6 +38,7 @@
     <link href="{{ asset('backend') }}/lib/medium-editor/medium-editor.css" rel="stylesheet">
     <link href="{{ asset('backend') }}/lib/medium-editor/default.css" rel="stylesheet">
     <link href="{{ asset('backend') }}/lib/summernote/summernote-bs4.css" rel="stylesheet">
+   
 
 
 
